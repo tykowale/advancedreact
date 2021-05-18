@@ -29,6 +29,8 @@ module.exports = {
     'react/react-in-jsx-scope': 0,
     'react/jsx-filename-extension': 0,
     'react/jsx-props-no-spreading': 0,
+    'arrow-body-style': 0,
+    'object-curly-newline': 0,
   },
   settings: {
     react: {
