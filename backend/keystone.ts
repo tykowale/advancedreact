@@ -1,8 +1,8 @@
 import 'dotenv/config';
 import { config, createSchema } from '@keystone-next/keystone/schema';
+import { User } from './schemas/User';
 
-const databaseURL =
-  process.env.DATABASE_URL || 'mongodb://localhost:27017/sick-fits-keystone';
+const databaseURL = process.env.DATABASE_URL;
 
 // eslint-disable-next-line no-unused-vars
 const sessionConfig = {
@@ -21,7 +21,7 @@ export default config({
     adapter: 'mongoose',
     url: databaseURL,
   },
-  lists: createSchema({}),
+  lists: createSchema({ User }),
   ui: {
     isAccessAllowed: () => true,
   },
