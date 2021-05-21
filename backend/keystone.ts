@@ -9,6 +9,7 @@ import {
 import { KeystoneContext } from '@keystone-next/types';
 import { User } from './schemas/User';
 import { Product } from './schemas/Product';
+import { ProductImage } from './schemas/ProductImage';
 
 const databaseURL = process.env.DATABASE_URL;
 
@@ -39,7 +40,7 @@ export default withAuth(
       adapter: 'mongoose',
       url: databaseURL,
     },
-    lists: createSchema({ User, Product }),
+    lists: createSchema({ User, Product, ProductImage }),
     ui: {
       isAccessAllowed: ({ session }: KeystoneContext): boolean =>
         !!session?.data,

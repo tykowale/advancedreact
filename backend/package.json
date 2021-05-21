@@ -5,7 +5,7 @@
   "author": "Wes Bos",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon --ext \"ts\" --exec keystone-next",
+    "dev": "nodemon --ext \"ts,json\" --exec keystone-next",
     "seed-data": "keystone-next --seed-data"
   },
   "eslintConfig": {
