@@ -31,6 +31,7 @@ module.exports = {
     'react/jsx-props-no-spreading': 0,
     'arrow-body-style': 0,
     'object-curly-newline': 0,
+    'no-console': 0,
   },
   settings: {
     react: {
