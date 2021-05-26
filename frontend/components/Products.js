@@ -1,13 +1,25 @@
 import { graphql } from 'react-relay';
+import styled from 'styled-components';
 import QueryRenderer from './QueryRenderer';
+import Product from './Product';
 
-function Products() {
+function Products({ allProducts }) {
   return (
     <div>
-      <p>Products!</p>
+      <ProductsListStyles>
+        {allProducts.map((product) => (
+          <Product key={product.id} product={product} />
+        ))}
+      </ProductsListStyles>
     </div>
   );
 }
+
+const ProductsListStyles = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 60px;
+`;
 
 const renderQuery = ({ error, props }) => {
   if (error) {
@@ -15,7 +27,8 @@ const renderQuery = ({ error, props }) => {
     return <div>{error.message}</div>;
   }
   if (props) {
-    return <Products />;
+    const { allProducts } = props;
+    return <Products allProducts={allProducts} />;
   }
   return <div>Loading</div>;
 };
