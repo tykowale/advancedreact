@@ -14,7 +14,10 @@ function network() {
   ]);
 }
 
+const source = new RecordSource();
+const store = new Store(source);
+
 export default new Environment({
   network: network(),
-  store: new Store(new RecordSource()),
+  store,
 });

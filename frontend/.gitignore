@@ -1,0 +1,3 @@
+**/__generated__/**/*
+data/.graphqlconfig
+data/playground.graphql
