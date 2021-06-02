@@ -1,30 +1,14 @@
 import { Environment, Store, RecordSource } from 'relay-runtime';
-import { batchMiddleware, RelayNetworkLayer, urlMiddleware } from 'react-relay-network-modern';
+import {
+  batchMiddleware,
+  RelayNetworkLayer,
+  urlMiddleware,
+  cacheMiddleware,
+} from 'react-relay-network-modern';
 import RelayRequestBatch from 'react-relay-network-modern/lib/RelayRequestBatch';
 import { extractFiles } from 'extract-files';
 
 import { endpoint } from '../../config';
-
-function network() {
-  return new RelayNetworkLayer([
-    urlMiddleware({
-      url: () => endpoint,
-    }),
-    batchMiddleware({
-      batchUrl: () => endpoint,
-      batchTimeout: 10,
-    }),
-    uploadMiddleware(),
-  ]);
-}
-
-const source = new RecordSource();
-const store = new Store(source);
-
-export default new Environment({
-  network: network(),
-  store,
-});
 
 function uploadMiddleware() {
   return (next) => async (req) => {
@@ -65,3 +49,29 @@ function uploadMiddleware() {
     return next(req);
   };
 }
+
+function network() {
+  return new RelayNetworkLayer([
+    urlMiddleware({
+      url: () => endpoint,
+    }),
+    batchMiddleware({
+      batchUrl: () => endpoint,
+      batchTimeout: 10,
+    }),
+    uploadMiddleware(),
+    cacheMiddleware({
+      size: 100,
+      ttl: 60 * 60 * 10, // 10 minutes
+      clearOnMutation: true,
+    }),
+  ]);
+}
+
+const source = new RecordSource();
+const store = new Store(source);
+
+export default new Environment({
+  network: network(),
+  store,
+});
