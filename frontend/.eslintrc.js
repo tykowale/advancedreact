@@ -22,6 +22,7 @@ module.exports = {
   rules: {
     ...a11yOff,
     'import/no-named-as-default': 0,
+    'import/prefer-default-export': 0,
     'react/prop-types': [1, { skipUndeclared: true }],
     'react/react-in-jsx-scope': 0,
     'react/jsx-filename-extension': 0,
