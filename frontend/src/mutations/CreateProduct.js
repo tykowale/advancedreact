@@ -8,12 +8,6 @@ const mutation = graphql`
       name
       price
       description
-      photo {
-        id
-        image {
-          publicUrlTransformed
-        }
-      }
     }
   }
 `;

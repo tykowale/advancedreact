@@ -1,10 +1,12 @@
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 import useForm from '../lib/useForm';
 import Form from './styles/Form';
 import { commit } from '../src/mutations/CreateProduct';
 import DisplayError from './ErrorMessage';
 
 export default function CreateProduct() {
+  const router = useRouter();
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const { inputs, handleChange, clearForm } = useForm({
@@ -18,7 +20,7 @@ export default function CreateProduct() {
     setLoading(true);
     try {
       e.preventDefault();
-      await commit({
+      const { createProduct } = await commit({
         ...inputs,
         photo: {
           create: {
@@ -30,6 +32,9 @@ export default function CreateProduct() {
 
       clearForm();
       setError(null);
+      await router.push({
+        pathname: `/product/${createProduct.id}`,
+      });
     } catch (err) {
       console.error(err);
       setError({ message: err.message });
