@@ -2,6 +2,7 @@ import { graphql } from 'react-relay';
 import styled from 'styled-components';
 import QueryRenderer from './QueryRenderer';
 import Product from './Product';
+import DisplayError from './ErrorMessage';
 
 function Products({ allProducts }) {
   return (
@@ -24,7 +25,7 @@ const ProductsListStyles = styled.div`
 const renderQuery = ({ error, props }) => {
   if (error) {
     console.log(error);
-    return <div>{error.message}</div>;
+    return <DisplayError error={error} />;
   }
   if (props) {
     const { allProducts } = props;
