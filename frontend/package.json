@@ -112,5 +112,14 @@
         }
       ]
     ]
+  },
+  "watch": {
+    "relay": {
+      "patterns": [
+        "src/**/*",
+        "pages/**/*"
+      ],
+      "extensions": "js,jsx"
+    }
   }
 }
