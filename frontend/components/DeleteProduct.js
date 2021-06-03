@@ -14,13 +14,16 @@ export default function DeleteProduct({ id, children }) {
 
   async function handleClick() {
     setLoading(true);
+    // eslint-disable-next-line no-restricted-globals,no-alert
     if (confirm('Are you sure you want to delete this item?')) {
       try {
         const { deleteProduct } = await commit({ id });
         console.log({ deleteProduct });
       } catch (e) {
+        // eslint-disable-next-line no-alert
         alert(e.message);
       }
+      window.location.reload();
     }
     setLoading(false);
   }
