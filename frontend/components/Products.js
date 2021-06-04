@@ -35,7 +35,7 @@ const renderQuery = ({ error, props }) => {
 };
 
 const query = graphql`
-  query Products_AllProductsQuery {
+  query ProductsQuery {
     allProducts {
       id
       name

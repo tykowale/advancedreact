@@ -19,7 +19,7 @@ const PaginationStyles = styled.div`
     }
   }
   a[aria-disabled='true'] {
-    color: var(--gray);
+    color: var(--lightGray);
     pointer-events: none;
   }
 `;

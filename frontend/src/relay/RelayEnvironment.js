@@ -55,11 +55,11 @@ function network() {
     urlMiddleware({
       url: () => endpoint,
     }),
-    batchMiddleware({
-      batchUrl: () => endpoint,
-      batchTimeout: 10,
-    }),
     uploadMiddleware(),
+    // batchMiddleware({
+    //   batchUrl: () => endpoint,
+    //   batchTimeout: 10,
+    // }),
     cacheMiddleware({
       size: 100,
       ttl: 60 * 60 * 10, // 10 minutes
