@@ -1,7 +1,13 @@
 import { commitMutation as relayCommitMutation } from 'react-relay';
 import RelayEnvironment from '../relay/RelayEnvironment';
 
-export default async function commitMutation({ mutation, variables, configs }) {
+export default async function commitMutation({
+  mutation,
+  variables,
+  configs,
+  optimisticUpdater,
+  updater,
+}) {
   return new Promise((resolve, reject) => {
     relayCommitMutation(RelayEnvironment, {
       mutation,
@@ -15,6 +21,8 @@ export default async function commitMutation({ mutation, variables, configs }) {
         resolve(response);
       },
       onError: reject,
+      optimisticUpdater,
+      updater,
     });
   });
 }

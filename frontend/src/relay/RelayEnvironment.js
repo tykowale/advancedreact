@@ -1,10 +1,5 @@
 import { Environment, Store, RecordSource } from 'relay-runtime';
-import {
-  batchMiddleware,
-  RelayNetworkLayer,
-  urlMiddleware,
-  cacheMiddleware,
-} from 'react-relay-network-modern';
+import { RelayNetworkLayer, urlMiddleware, cacheMiddleware } from 'react-relay-network-modern';
 import RelayRequestBatch from 'react-relay-network-modern/lib/RelayRequestBatch';
 import { extractFiles } from 'extract-files';
 
@@ -50,16 +45,21 @@ function uploadMiddleware() {
   };
 }
 
+function attachCookies() {
+  return (next) => async (req) => {
+    req.fetchOpts.credentials = 'include';
+
+    return next(req);
+  };
+}
+
 function network() {
   return new RelayNetworkLayer([
+    attachCookies(),
     urlMiddleware({
       url: () => endpoint,
     }),
     uploadMiddleware(),
-    // batchMiddleware({
-    //   batchUrl: () => endpoint,
-    //   batchTimeout: 10,
-    // }),
     cacheMiddleware({
       size: 100,
       ttl: 60 * 60 * 10, // 10 minutes

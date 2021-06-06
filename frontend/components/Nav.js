@@ -38,7 +38,7 @@ function renderQuery({ error, props }) {
   return <div>Loading</div>;
 }
 
-const query = graphql`
+export const query = graphql`
   query NavQuery {
     authenticatedItem {
       ... on User {
