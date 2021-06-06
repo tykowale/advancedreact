@@ -1,6 +1,5 @@
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
-
 import { ReactRelayContext } from 'react-relay';
 
 import Page from '../components/Page';
