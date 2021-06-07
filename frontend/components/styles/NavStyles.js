@@ -63,6 +63,11 @@ const NavStyles = styled.ul`
     }
   }
 
+  //this should be covered about but it isn't for some reason
+  a:hover {
+    text-decoration: none;
+  }
+
   @media (max-width: 1300px) {
     border-top: 1px solid var(--lightGray);
     width: 100%;

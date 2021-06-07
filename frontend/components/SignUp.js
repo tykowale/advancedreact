@@ -2,13 +2,15 @@ import { useState } from 'react';
 import Form from './styles/Form';
 import useForm from '../lib/useForm';
 import DisplayError from './ErrorMessage';
-import { commit } from '../src/mutations/SignIn';
+import { commit } from '../src/mutations/SignUp';
 
-export default function SignIn() {
+export default function SignUp() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState({});
-  const { inputs, handleChange } = useForm({
+  const [user, setUser] = useState(null);
+  const { inputs, handleChange, resetForm } = useForm({
     email: '',
+    name: '',
     password: '',
   });
 
@@ -16,13 +18,9 @@ export default function SignIn() {
     setLoading(true);
     try {
       e.preventDefault();
-      const { authenticateUserWithPassword } = await commit(inputs);
-
-      if (authenticateUserWithPassword?.code) {
-        setError({ message: authenticateUserWithPassword.message });
-      } else {
-        window.location = '/';
-      }
+      const { createUser } = await commit(inputs);
+      setUser(createUser);
+      resetForm();
     } catch (err) {
       console.error(err);
       setError({ message: err.message });
@@ -32,9 +30,22 @@ export default function SignIn() {
 
   return (
     <Form method="POST" onSubmit={handleSubmit}>
-      <h2>Sign In</h2>
+      <h2>Sign Up</h2>
       <DisplayError error={error} />
       <fieldset disabled={loading} aria-busy={loading}>
+        {user && <p>Signed up with {user.email} please log in</p>}
+        <label htmlFor="name">
+          Name
+          <input
+            type="name"
+            name="name"
+            placeholder="Name"
+            autoComplete="name"
+            value={inputs.name}
+            onChange={handleChange}
+          />
+        </label>
+
         <label htmlFor="email">
           Email
           <input
@@ -59,7 +70,7 @@ export default function SignIn() {
           />
         </label>
 
-        <button type="submit">Sign In</button>
+        <button type="submit">Sign Up</button>
       </fieldset>
     </Form>
   );

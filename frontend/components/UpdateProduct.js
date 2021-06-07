@@ -16,9 +16,7 @@ export default function UpdateProduct({ product }) {
     setLoading(true);
     try {
       e.preventDefault();
-      const { updateProduct } = await commit({
-        ...inputs,
-      });
+      const { updateProduct } = await commit(inputs);
 
       clearForm();
       setError(null);
