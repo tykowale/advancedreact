@@ -3,9 +3,9 @@ import Link from 'next/link';
 import QueryRenderer from './QueryRenderer';
 import NavStyles from './styles/NavStyles';
 import DisplayError from './ErrorMessage';
+import SignOut from './SignOut';
 
 function Nav({ user }) {
-  console.log(user);
   return (
     <NavStyles>
       <Link href="/products">products</Link>
@@ -14,6 +14,7 @@ function Nav({ user }) {
           <Link href="/sell">sell</Link>
           <Link href="/orders">orders</Link>
           <Link href="/account">account</Link>
+          <SignOut />
         </>
       )}
 
