@@ -10,6 +10,7 @@ import { KeystoneContext } from '@keystone-next/types';
 import { User } from './schemas/User';
 import { Product } from './schemas/Product';
 import { ProductImage } from './schemas/ProductImage';
+import { CartItem } from './schemas/CartItem';
 import { insertSeedData } from './seed-data';
 
 const databaseURL = process.env.DATABASE_URL;
@@ -51,7 +52,7 @@ export default withAuth(
         }
       },
     },
-    lists: createSchema({ User, Product, ProductImage }),
+    lists: createSchema({ User, Product, ProductImage, CartItem }),
     ui: {
       isAccessAllowed: ({ session }: KeystoneContext): boolean =>
         !!session?.data,
