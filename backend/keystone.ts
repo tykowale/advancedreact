@@ -27,6 +27,11 @@ const { withAuth } = createAuth({
   initFirstItem: {
     fields: ['name', 'email', 'password'],
   },
+  passwordResetLink: {
+    sendToken: async (args) => {
+      console.log(args);
+    },
+  },
 });
 
 export default withAuth(
@@ -40,9 +45,11 @@ export default withAuth(
     db: {
       adapter: 'mongoose',
       url: databaseURL,
-      // onConnect: async (keystone) => {
-      //   await insertSeedData(keystone);
-      // },
+      onConnect: async (keystone) => {
+        if (process.argv.includes('--seed-data')) {
+          await insertSeedData(keystone);
+        }
+      },
     },
     lists: createSchema({ User, Product, ProductImage }),
     ui: {
