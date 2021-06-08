@@ -1,24 +1,31 @@
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 import Form from './styles/Form';
 import useForm from '../lib/useForm';
 import DisplayError from './ErrorMessage';
-import { commit } from '../src/mutations/RequestReset';
+import { commit } from '../src/mutations/ResetPassword';
 
-export default function RequestReset() {
+export default function ResetPassword({ token }) {
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState({});
-  const [success, setSuccess] = useState(false);
-  const { inputs, handleChange, resetForm } = useForm({
+  const { inputs, handleChange } = useForm({
     email: '',
+    password: '',
+    token,
   });
 
   async function handleSubmit(e) {
     setLoading(true);
     try {
       e.preventDefault();
-      const { sendUserPasswordResetLink } = await commit(inputs);
-      setSuccess(sendUserPasswordResetLink == null);
-      resetForm();
+      const { redeemUserPasswordResetToken } = await commit(inputs);
+      if (redeemUserPasswordResetToken == null) {
+        await router.push('/signin');
+        return;
+      }
+
+      setError({ message: redeemUserPasswordResetToken.message });
     } catch (err) {
       console.error(err);
       setError({ message: err.message });
@@ -28,10 +35,9 @@ export default function RequestReset() {
 
   return (
     <Form method="POST" onSubmit={handleSubmit}>
-      <h2>Request Password Reset</h2>
+      <h2>Reset Password</h2>
       <DisplayError error={error} />
       <fieldset disabled={loading} aria-busy={loading}>
-        {success && <p>Password Reset Successful! Check email for link</p>}
         <label htmlFor="email">
           Email
           <input
@@ -44,7 +50,19 @@ export default function RequestReset() {
           />
         </label>
 
-        <button type="submit">Request Reset</button>
+        <label htmlFor="password">
+          Password
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            autoComplete="password"
+            value={inputs.password}
+            onChange={handleChange}
+          />
+        </label>
+
+        <button type="submit">Reset Password</button>
       </fieldset>
     </Form>
   );
