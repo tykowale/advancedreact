@@ -4,8 +4,10 @@ import QueryRenderer from './QueryRenderer';
 import NavStyles from './styles/NavStyles';
 import DisplayError from './ErrorMessage';
 import SignOut from './SignOut';
+import { useCart } from '../lib/cartState';
 
 function Nav({ user }) {
+  const { openCart } = useCart();
   return (
     <NavStyles>
       <Link href="/products">products</Link>
@@ -15,6 +17,9 @@ function Nav({ user }) {
           <Link href="/orders">orders</Link>
           <Link href="/account">account</Link>
           <SignOut />
+          <button type="button" onClick={openCart}>
+            My Cart
+          </button>
         </>
       )}
 

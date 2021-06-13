@@ -6,25 +6,32 @@ import Supreme from './styles/Supreme';
 import CartItem from './CartItem';
 import formatMoney from '../lib/formatMoney';
 import calcTotalPrice from '../lib/calcTotalPrice';
+import { useCart } from '../lib/cartState';
+import CloseButton from './styles/CloseButton';
 
 function Cart({ user }) {
+  const { isCartOpen, closeCart } = useCart();
   if (user == null) {
     return null;
   }
   return (
-    <CartStyles open>
+    <CartStyles open={isCartOpen}>
       <header>
         <Supreme>{user.name}&apos;s Cart</Supreme>
+        <CloseButton type="button" onClick={closeCart}>
+          &times;
+        </CloseButton>
       </header>
-
       <ul>
         {user.cart.map((cartItem) => (
           <CartItem key={cartItem.id} cartItem={cartItem} />
         ))}
       </ul>
+      ;
       <footer>
         <p>{formatMoney(calcTotalPrice(user.cart))}</p>
       </footer>
+      ;
     </CartStyles>
   );
 }
